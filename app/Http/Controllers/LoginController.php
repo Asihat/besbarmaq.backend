@@ -14,17 +14,39 @@ class LoginController extends Controller
         $this->_account = $account;
     }
 
-    public function Login()
+    public function Login(Request $request)
     {
-        $result = $this->_account->Login();
-
+        $result = $this->_account->Login($request);
         return $result;
     }
 
-    public function Register()
+    public function Register(Request $request)
     {
-        $result = $this->_account->Register();
+        $result = $this->_account->Register($request);
+        return $result;
+    }
 
+    public function Verifyphoneno(Request $request)
+    {
+        $result = $this->_account->VerifyPhoneNo($request);
+        return $result;
+    }
+
+    public function ForgotPassword(Request $request)
+    {
+        $result = $this->_account->ForgotPassword($request);
+        return $result;
+    }
+
+    public function NewPassword(Request $request)
+    {
+        $result = $this->_account->NewPassword($request);
+        return $result;
+    }
+
+    public function VerifyForgotPassword(Request $request)
+    {
+        $result = $this->_account->VerifyForgotPassword($request);
         return $result;
     }
 

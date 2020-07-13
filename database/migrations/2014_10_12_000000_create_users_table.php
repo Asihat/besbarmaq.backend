@@ -20,8 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('avatar');
             $table->string('name');
+            $table->string('surname');
             $table->string('description');
-            $table->string('bloked');
+            $table->integer('bloked');
             $table->string('token');
             $table->timestamps();
         });
