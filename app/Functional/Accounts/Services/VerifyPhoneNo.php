@@ -2,6 +2,7 @@
 
 namespace App\Functional\Accounts\Services;
 
+use App\Models\Smslist;
 use App\Models\Users;
 
 trait VerifyPhoneNo
@@ -26,16 +27,20 @@ trait VerifyPhoneNo
                 break;
             }
 
-            if (!Users::where('token', $token)->where('phoneNo', $phone_no)->where('description', $number)->where('bloked', 0)->first()) {
+            if (!Users::where('token', $token)->where('phoneNo', $phone_no)->where('description', $number)->where('bloked', 2)->first()) {
                 $result['message'] = 'ERROR 2';
 
                 break;
             }
 
-            $user = Users::where('token', $token)->where('phoneNo', $phone_no)->where('description', $number)->where('bloked', 0)->first();
+            $user = Users::where('token', $token)->where('phoneNo', $phone_no)->where('description', $number)->where('bloked', 2)->first();
             $user->description = '';
             $user->bloked = 1;
             $user->save();
+
+            $smslist = Smslist::where('phoneNo', $user->phoneNo)->where('status', 1)->where('type', 2)->first();
+            $smslist->status = 0;
+            $smslist->save();
 
             $result['success'] = true;
             $result['message'] = 'User verified';

@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="fc2be9fb-bb30-4ea4-af3a-07e1c753cae5" name="REG.RU-Besbarmaq.site" url="http://37.140.192.184">
-        <fileTransfer accessType="FTPS" host="37.140.192.184" port="21">
+        <fileTransfer rootFolder="/www/besbarmaq.site" accessType="FTPS" host="37.140.192.184" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

@@ -31,15 +31,23 @@ trait ForgotPassword
                 $unsms->save();
             }
 
-            $number = $this->SendSmsOnRegister($phone_no);
+            $number = $this->SendSmsOnForgotPassword($phone_no);
 
-            $smslist = new Smslist();
-            $smslist->status = 1;
-            $smslist->phoneNo = $phone_no;
-            $smslist->message = 'FORGOT PASSWORD';
-            $smslist->code = $number;
-            $smslist->type = 1;
-            $smslist->save();
+            do {
+                if (Smslist::where('status', 1)->where('phoneNo', $phone_no)->where('type', 1)->first()) {
+                    $smslist = Smslist::where('status', 1)->where('phoneNo', $phone_no)->where('type', 1)->first();
+                    $smslist->status = 0;
+                    $smslist->save();
+                }
+                $smslist = new Smslist();
+                $smslist->status = 1;
+                $smslist->phoneNo = $phone_no;
+                $smslist->message = 'FORGOT PASSWORD';
+                $smslist->code = $number;
+                $smslist->type = 1;
+                $smslist->save();
+
+            } while (false);
 
             $result['success'] = true;
             $result['message'] = 'WAIT SMS';

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('description');
-            $table->integer('bloked');
+            $table->integer('bloked')->comment('0 - bloked user, 1 - active user, 2 - registered user but not verified');
             $table->string('token');
             $table->timestamps();
         });

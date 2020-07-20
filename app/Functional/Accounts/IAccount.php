@@ -9,4 +9,5 @@ interface IAccount {
     public function ForgotPassword($request);
     public function VerifyForgotPassword($request);
     public function NewPassword($request);
+    public function SendSmsOnRegisterAgain($request);
 }

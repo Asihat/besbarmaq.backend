@@ -2,6 +2,8 @@
 
 namespace App\Functional\Accounts\Services;
 
+use App\Models\Smslist;
+use App\Models\Users;
 use Illuminate\Support\Facades\Log;
 
 trait SendSmsOnRegister
@@ -22,19 +24,35 @@ trait SendSmsOnRegister
 
         $opts = array('http' =>
             array(
-                'method'  => 'POST',
-                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'method' => 'POST',
+                'header' => 'Content-Type: application/x-www-form-urlencoded',
                 'content' => $postdata
             )
         );
 
-        $context  = stream_context_create($opts);
+        $context = stream_context_create($opts);
         // TODO result write to database for future
         $result = file_get_contents('https://smsc.kz/sys/send.php', false, $context);
-        Log::info('PHONE NO: ' . '+' . $phoneNo);
-        Log::info('RESULT: ' . $result);
 
-        return $pincode;
+        do {
+            if (Smslist::where('phoneNo', $phoneNo)->where('type', 2)->first()) {
+                $smslist = Smslist::where('phoneNo', $phoneNo)->where('type', 2)->first();
+                $smslist->status = 0;
+                $smslist->save();
+            }
+
+            $smslist = new Smslist();
+            $smslist->status = 1;
+            $smslist->phoneNo = $phoneNo;
+            $smslist->message = 'REGISTER USER, ' . $result;
+            $smslist->code = $pincode;
+            $smslist->type = 2;
+            $smslist->save();
+        } while (false);
+
+        $user = Users::where('phoneNo', $phoneNo)->first();
+        $user->description = $pincode;
+        $user->save();
     }
 }
 

@@ -50,4 +50,9 @@ class LoginController extends Controller
         return $result;
     }
 
+    public function SendSmsOnRegisterAgain(Request $request) {
+        $result = $this->_account->SendSmsOnRegisterAgain($request);
+        return $result;
+    }
+
 }

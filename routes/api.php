@@ -17,11 +17,34 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/* Account */
+Route::prefix('account')->group(function () {
+    Route::post('/login', 'LoginController@Login');
+    Route::post('/register', 'LoginController@Register');
+    Route::post('/verifyphoneno', 'LoginController@Verifyphoneno');
+    Route::post('/sendsmsonregisteragain', 'LoginController@SendSmsOnRegisterAgain');
 
-Route::post('/login', 'LoginController@Login');
-Route::post('/register', 'LoginController@Register');
-Route::post('/verifyphoneno', 'LoginController@Verifyphoneno');
+    Route::post('/forgotpassword', 'LoginController@ForgotPassword');
+    Route::post('/newpassword', 'LoginController@NewPassword');
+    Route::post('/verifyforgotpassword', 'LoginController@VerifyForgotPassword');
+});
 
-Route::post('/forgotpassword', 'LoginController@ForgotPassword');
-Route::post('/newpassword', 'LoginController@NewPassword');
-Route::post('/verifyforgotpassword', 'LoginController@VerifyForgotPassword');
+/* Lenta */
+Route::prefix('lenta')->group(function () {
+    Route::post('index', 'LentaController@index');
+    Route::post('get', 'LentaController@getInfo');
+    Route::post('comments', 'LentaController@Comments');
+    Route::post('comments/add', 'LentaController@AddComment');
+});
+
+
+Route::prefix('order')->group(function () {
+   Route::post('create', 'OrderController@CreateOrder');
+   Route::post('list', 'OrderController@ListOrders');
+});
+
+Route::prefix('chief')->group(function() {
+   Route::post('create', 'ChiefController@CreateChief');
+});
+
+Route::get('images/{type}/{filename}', 'PhotoController@image');

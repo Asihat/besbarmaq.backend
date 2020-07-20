@@ -3,6 +3,7 @@
 namespace App\Functional\Accounts\Services;
 
 use App\Models\Users;
+use Illuminate\Support\Str;
 
 trait Login
 {
@@ -24,19 +25,32 @@ trait Login
                 break;
             }
 
-            if(!Users::where('phoneNo', $phone_no)->where('password', $password)->where('bloked', 1)->first()) {
-                $result['message'] = 'USER IS BLOCKED';
-                break;
-            }
-
             if(!Users::where('phoneNo', $phone_no)->where('password', $password)->first()) {
-                $result['message'] = 'Password is incorrect';
+                $result['messsage'] = 'INCORRECT PASSWORD';
                 break;
             }
 
             $user = Users::where('phoneNo', $phone_no)->where('password', $password)->first();
 
-            $result['user'] = $user;
+            if($user->bloked == 0) {
+                $result['message'] = 'USER IS BLOKED, CONTACT WITH US';
+                break;
+            }
+
+            if($user->bloked == 2) {
+                $result['message'] = 'USER IS NOT VERIFIED. VERIFY YOURSELF';
+                break;
+            }
+
+            if($user->bloked != 1) {
+                $result['messsage'] = 'SOMETHING WRONG ON SERVER. AND CONTACT WITH US.';
+                break;
+            }
+
+            $user->token = Str::random(60);
+            $user->save();
+
+            $result['token'] = $user->token;
             $result['success'] = true;
         } while(false);
         return response()->json($result);
