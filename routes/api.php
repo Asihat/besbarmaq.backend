@@ -39,12 +39,19 @@ Route::prefix('lenta')->group(function () {
 
 
 Route::prefix('order')->group(function () {
-   Route::post('create', 'OrderController@CreateOrder');
-   Route::post('list', 'OrderController@ListOrders');
+    Route::post('create', 'OrderController@CreateOrder');
+    Route::post('list', 'OrderController@ListOrders');
 });
 
-Route::prefix('chief')->group(function() {
-   Route::post('create', 'ChiefController@CreateChief');
+Route::prefix('chief')->group(function () {
+    Route::post('create', 'ChiefController@CreateChief');
+    Route::post('bestchiefs', 'ChiefController@BestChiefs');
+    Route::post('nearchiefs', 'ChiefController@NearChiefs');
+    Route::post('newchiefs', 'ChiefController@NewChiefs');
+    Route::post('chiefforhome', 'ChiefController@ChiefForHome');
+    Route::post('chiefinformation', 'ChiefController@ChiefInformation');
+    Route::post('subscribe', 'ChiefController@SubscribeToChief');
+
 });
 
 Route::get('images/{type}/{filename}', 'PhotoController@image');

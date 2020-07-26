@@ -22,6 +22,7 @@ class CreateLentaTable extends Migration
             $table->string('photo');
             $table->string('work_time');
             $table->string('average_time');
+            $table->tinyInteger('rating')->default(0);
             $table->timestamps();
         });
     }

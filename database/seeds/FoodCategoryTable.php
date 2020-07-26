@@ -32,8 +32,8 @@ class FoodCategoryTable extends Seeder
         ]);
 
         \App\Models\FoodCategory::create([
-            'name' => 'Выпечки',
-            'description' => 'Выпечки'
+            'name' => 'Мучные продукты',
+            'description' => 'Мучные продукты'
         ]);
 
         \App\Models\FoodCategory::create([
@@ -69,6 +69,11 @@ class FoodCategoryTable extends Seeder
         \App\Models\FoodCategory::create([
             'name' => 'Капченные продукты',
             'description' => 'Капченные продукты'
+        ]);
+
+        \App\Models\FoodCategory::create([
+            'name' => 'Молочные продукты',
+            'description' => 'Закуски'
         ]);
     }
 }

@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('description');
             $table->binary('comment');
             $table->binary('offer');
+            $table->tinyInteger('rating');
             $table->timestamps();
         });
     }

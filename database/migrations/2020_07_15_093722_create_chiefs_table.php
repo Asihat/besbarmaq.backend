@@ -22,6 +22,7 @@ class CreateChiefsTable extends Migration
             $table->string('gender');
             $table->string('contact');
             $table->tinyInteger('home_cook')->comment('0 - NO, 1 - YES');
+            $table->tinyInteger('rating')->default(0);
             $table->timestamps();
         });
     }
